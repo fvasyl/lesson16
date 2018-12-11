@@ -1,3 +1,5 @@
+import scala.annotation.tailrec
+
 object HelloWorld {
   def main(args: Array[String]): Unit = {
 
@@ -25,21 +27,38 @@ object HelloWorld {
 
     println(s"People sorted by age: ${byAge}")
 
-    def fact(n: Int): Int = {
+    def fib(n: Int): Int = {
       if (n<=0) 1
       else {
-        fact(n-1)+fact(n-2)
+        fib(n-1)+fib(n-2)
       }
     }
-    println(fact(0))
-    println(fact(1))
-      println(fact(2))
-      println(fact(3))
-      println(fact(4))
-      println(fact(5))
-      println(fact(6))
-      println(fact(7))
+    println(fib(0))
+    println(fib(1))
+    println(fib(2))
+    println(fib(3))
+    println(fib(4))
+    println(fib(5))
+    println(fib(6))
+    println(fib(7))
 
+
+    def fib1(n: Int): Int= {
+      @tailrec
+      def rec(n: Int, acc: Int, acc1: Int):  Int = {
+        if (n <= 0)  acc
+        else rec(n - 1, acc1, acc1+acc)
+      }
+      rec(n, acc=1, 1)
+    }
+    println(fib1(0))
+    println(fib1(1))
+    println(fib1(2))
+    println(fib1(3))
+    println(fib1(4))
+    println(fib1(5))
+    println(fib1(6))
+    println(fib1(7))
   }
 }
 
