@@ -27,6 +27,9 @@ object HelloWorld {
 
     println(s"People sorted by age: ${byAge}")
 
+
+    //////////////////////////     2      ///////////////////////
+
     def fib(n: Int): Int = {
       if (n<=0) 1
       else {
@@ -59,6 +62,34 @@ object HelloWorld {
     println(fib1(5))
     println(fib1(6))
     println(fib1(7))
+
+
+    lazy val fib3: Stream[Int] = 1 #:: 1 #:: (fib3 zip fib3.tail map { case (a, b) => a + b })
+    println(fib3.take(10).toList)
   }
 }
+
+
+////////////////////////////    3     ///////////////////////
+sealed trait Expr
+
+case class Var(value: Int) extends Expr
+
+sealed trait Op extends Expr
+case class Mul(a: Expr, b: Expr) extends Expr
+case class Sum(a: Expr, b: Expr) extends Expr
+
+def show(expr: Expr): String = expr match {
+  case Var(i) => i.toString
+  case Mul(a, b) =>"(" + show(a) + "*" + show(b) +  ")"
+  case Sum(a, b) =>"(" + show(a) + "+" + show(b) +  ")"
+}
+val expr = Mul(Var(3), Sum(Var(2), Var(1)))
+show(expr)
+def eval(expr: Expr): Int = expr match {
+  case Var(i) => i.toInt
+  case Mul(a, b) => eval(a) * eval(b)
+  case Sum(a, b) => eval(a) + eval(b)
+}
+eval(expr)
 
